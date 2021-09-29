@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import { useParams, useHistory, useLocation, Link, Route} from "react-router-dom";
+import { useParams, useHistory, useLocation, Link, Route, Switch} from "react-router-dom";
 import { fetchGetMovieDetails } from '../../services/movies-api';
 
 import styles from './MovieDetailsPage.module.css';
@@ -83,6 +83,7 @@ export default function MovieDetailsPage() {
             )}          
 
             <Suspense>
+              <Switch>
                 <Route path={`/movies/:movieId/cast`}>
                     <Cast movieId={movieId} />
                 </Route>
@@ -90,6 +91,7 @@ export default function MovieDetailsPage() {
                 <Route path={`/movies/:movieId/reviews`}>
                     <Reviews movieId={movieId}/>
                 </Route>
+              </Switch>
             </Suspense>
         </div>
     );
