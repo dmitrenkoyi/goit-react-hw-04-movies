@@ -4,9 +4,17 @@ import Navigation from './components/Navigation/Navigation';
 import Container from './components/Container/Container';
 import Loader from './components/Loader/Loader';
 
-const HomePage = lazy(() => import('./views/HomePage.js' /* webpackChunkName: "home-page" */));
-const MoviesPage = lazy(() => import('./views/MoviesPage' /* webpackChunkName: "movie-page" */));
-const MovieDetailsPage = lazy(() => import('./views/MovieDetailsPage' /* webpackChunkName: "movie-detail-page" */));
+const HomePage = lazy(() =>
+  import('./views/HomePage' /* webpackChunkName: "home-page" */),
+);
+const MoviesPage = lazy(() =>
+  import('./views/MoviesPage' /* webpackChunkName: "movie-page" */),
+);
+const MovieDetailsPage = lazy(() =>
+  import(
+    './views/MovieDetailsPage' /* webpackChunkName: "movie-detail-page" */
+  ),
+);
 const NotFoundView = lazy(() => import('./views/NotFoundView.js'));
 
 export default function App() {
@@ -14,30 +22,25 @@ export default function App() {
     <Container>
       <Navigation />
 
-        <Suspense fallback={<Loader />}>
-          <Switch>
+      <Suspense fallback={<Loader />}>
+        <Switch>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
 
-            <Route path='/' exact>
-              <HomePage />
-            </Route>
+          <Route path="/movies" exact>
+            <MoviesPage />
+          </Route>
 
-            <Route path='/movies' exact>
-              <MoviesPage />
-            </Route>
+          <Route path="/movies/:movieId">
+            <MovieDetailsPage />
+          </Route>
 
-            <Route path='/movies/:movieId' >
-              <MovieDetailsPage />
-            </Route>
-          
-            <Route>
-              <NotFoundView />
-            </Route>
-
-          </Switch>
-
-        </Suspense>
-    
+          <Route>
+            <NotFoundView />
+          </Route>
+        </Switch>
+      </Suspense>
     </Container>
   );
 }
-
